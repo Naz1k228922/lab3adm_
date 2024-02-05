@@ -1,0 +1,47 @@
+#!/bin/bash
+
+
+initials="NazariiKoval"
+mkdir "$initials"
+
+cd "$initials"
+
+for i in {1..3}; do
+    group="KI-406"
+    mkdir "$group"
+    cd "$group"
+    
+    for j in {1..2}; do
+        filename="Студент_$j.txt"
+        echo "Номер групи: $group" > "$filename"
+        echo "Дата виконання завдання: 05.02.2024" >> "$filename"
+        echo "Електронна пошта: nazarkoval09@gmail.com" >> "$filename"
+    done
+    
+    cd ..
+done
+
+cp -r */* ../
+
+for file in *.txt; do
+    email_regex="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+    if grep -q -E "$email_regex" "$file"; then
+        echo "Електронна пошта в $file є дійсною."
+    else
+        echo "Увага! У $file виявлено неправильний формат електронної пошти."
+    fi
+done
+
+git init
+git add .
+git commit -m "Додано bash скрипт"
+git remote add origin https://github.com/Naz1k228922/lab3adm_
+git push -u origin master
+
+log_filename="Apache_2.4-PHP_5.5-5.6_queriesa.log"
+error_404_count=$(grep -c " 404 " "$log_filename")
+echo "Кількість помилок 404: $error_404_count"
+
+echo "Повідомлення про помилку 404:"
+grep " 404 " "$log_filename"
+
